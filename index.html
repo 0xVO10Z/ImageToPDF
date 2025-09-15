@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Image → PDF Converter</title>
 <link rel="icon" type="image/x-icon" href="ImgToPdfIcon_Round.png">
-<!-- Same CSS as before (no changes) -->
 <style>
-/* --- styles unchanged --- */
 :root{
   --bg:#0f1724;
   --card:#0b1220;
@@ -42,14 +40,38 @@ html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10
 .btn:active{transform:scale(0.98);}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);box-shadow:none;}
 .file-input{display:none;}
-.right{display:flex;flex-direction:column;gap:16px;justify-content:center;opacity:0;transform:translateY(12px);transition:var(--transition);}
-.right.show{opacity:1;transform:translateY(0);}
+.right{display:flex;flex-direction:column;gap:16px;justify-content:center;opacity:0;transform:translateY(12px);transition:var(--transition);pointer-events:none;filter:grayscale(80%);}
+/* Enabled state */
+.right.show{opacity:1;transform:translateY(0);pointer-events:auto;filter:none;}
 .info{padding:14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px;transition:var(--transition);}
 .info-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
 .label{font-size:13px;color:var(--muted);}
 .value{font-weight:600;font-size:13px;color:#e6eef8;}
 .select,input.num-input{transition:var(--transition);}
-.select:hover,input.num-input:hover{transform:scale(1.03);}
+.select{
+  appearance:none;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.08);
+  color:#e6eef8;
+  padding:8px 34px 8px 12px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+  box-shadow:inset 0 0 8px rgba(0,0,0,0.3);
+  background-image:url("data:image/svg+xml,%3Csvg fill='none' stroke='%23e6eef8' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  background-size:14px;
+  animation:dropdownFadeIn 0.25s ease forwards;
+}
+.select:hover{transform:scale(1.03);border-color:var(--accent-2);}
+.select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(96,165,250,0.3);}
+.select option{background-color:#1a2537;color:#e6eef8;padding:6px 10px;}
+.select option:checked{background-color:#2563eb;color:#ffffff;}
+.select option:hover{background-color:#334155;}
+@keyframes dropdownFadeIn{0%{opacity:0; transform:translateY(-4px);}100%{opacity:1; transform:translateY(0);}}
+input.num-input{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);color:#e6eef8;padding:8px 12px;border-radius:8px;font-size:13px;box-shadow:inset 0 0 8px rgba(0,0,0,0.3);}
+input.num-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,231,183,0.25);}
 .muted-small{color:var(--muted);font-size:12px;transition:var(--transition);}
 </style>
 </head>
@@ -165,14 +187,21 @@ function loadFiles(files){
 function updatePreview(){
   previewWrap.innerHTML='';
   imagesData.forEach(d=>{const thumb=document.createElement('img');thumb.src=d.img.src;previewWrap.appendChild(thumb);});
-  if(imagesData.length){pagesEl.textContent=imagesData.length;rightCol.classList.add('show');convertBtn.disabled=false;log("Previews ready");}
+  if(imagesData.length){
+    pagesEl.textContent=imagesData.length;
+    rightCol.classList.add('show'); // Enable right column
+    convertBtn.disabled=false;
+    log("Previews ready");
+  }
 }
 
 function clearSelection(){
   currentFiles=[];imagesData=[];
   fileNameEl.textContent='No files selected';fileSizeEl.textContent='—';pagesEl.textContent='0';
   previewWrap.innerHTML='<div class="hint"><div>Drop images here or click to upload</div><div class="muted-small">PNG, JPG, JPEG — max 10MB each</div></div>';
-  rightCol.classList.remove('show');convertBtn.disabled=true;log("Selection cleared");
+  rightCol.classList.remove('show'); // Disable right column
+  convertBtn.disabled=true;
+  log("Selection cleared");
 }
 
 convertBtn.addEventListener('click',async()=>{
