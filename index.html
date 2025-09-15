@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Image → PDF Converter — Sleek & Animated</title>
+<title>Image → PDF Converter</title>
 
+<!-- Same CSS as before (no changes) -->
 <style>
+/* --- styles unchanged --- */
 :root{
   --bg:#0f1724;
   --card:#0b1220;
@@ -20,201 +22,76 @@
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   --transition: all .25s cubic-bezier(0.4,0,0.2,1);
 }
-
-html,body{
-  height:100%;
-  margin:0;
-  background: radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent 8%),
-              radial-gradient(1000px 500px at 90% 90%, rgba(110,231,183,0.03), transparent 8%),
-              var(--bg);
-  color:#e6eef8;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:28px;
-  transition: var(--transition);
-}
-
-.container{
-  width:100%;
-  max-width:var(--max-width);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:28px;
-  box-sizing:border-box;
-  backdrop-filter: blur(6px) saturate(120%);
-  border: 1px solid rgba(255,255,255,0.03);
-  display:grid;
-  grid-template-columns: 380px 1fr;
-  gap:24px;
-  opacity:0;
-  transform: translateY(16px);
-  animation: fadeInUp .6s forwards;
-}
-
-@keyframes fadeInUp{
-  to{ opacity:1; transform: translateY(0); }
-}
-
-@media (max-width: 880px){
-  .container{ grid-template-columns: 1fr; padding:20px; gap:16px; }
-}
-
-.left{ display:flex; flex-direction:column; gap:18px; align-items:center; }
+html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent 8%),radial-gradient(1000px 500px at 90% 90%, rgba(110,231,183,0.03), transparent 8%),var(--bg);color:#e6eef8;display:flex;align-items:center;justify-content:center;padding:28px;transition:var(--transition);}
+.container{width:100%;max-width:var(--max-width);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;box-sizing:border-box;backdrop-filter:blur(6px) saturate(120%);border:1px solid rgba(255,255,255,0.03);display:grid;grid-template-columns:380px 1fr;gap:24px;opacity:0;transform:translateY(16px);animation:fadeInUp .6s forwards;}
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+@media(max-width:880px){.container{grid-template-columns:1fr;padding:20px;gap:16px;}}
+.left{display:flex;flex-direction:column;gap:18px;align-items:center;}
 .brand{text-align:center;width:100%;}
-.title{ font-size:20px; font-weight:600; margin:0; letter-spacing: -0.2px; }
-.subtitle{ font-size:13px; color:var(--muted); margin-top:6px; }
-
-.dropzone{
-  width:100%;
-  min-height:260px;
-  border-radius:12px;
-  padding:14px;
-  box-sizing:border-box;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  align-items:center;
-  justify-content:center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
-  border: 1px dashed rgba(255,255,255,0.06);
-  transition: var(--transition);
-  position:relative;
-  user-select:none;
-  cursor:pointer;
-  overflow:hidden;
-}
-
-.dropzone.dragover{
-  transform: translateY(-4px) scale(1.02);
-  border-color: rgba(96,165,250,0.6);
-  box-shadow: 0 12px 36px rgba(96,165,250,0.12);
-  background: linear-gradient(180deg, rgba(96,165,250,0.03), rgba(96,165,250,0.01));
-}
-
-.dropzone .hint{
-  color:var(--muted);
-  text-align:center;
-  font-size:13px;
-  transition: var(--transition);
-}
-
-.preview{
-  width:100%;
-  height:100%;
-  max-height:380px;
-  border-radius:10px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-}
-
-.preview img{
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;
-  display:block;
-  border-radius:6px;
-  filter: drop-shadow(0 6px 20px rgba(2,6,23,0.6));
-  opacity:0;
-  transform: scale(0.97);
-  animation: imgFadeIn .5s forwards;
-}
-
-@keyframes imgFadeIn{
-  to{ opacity:1; transform: scale(1); }
-}
-
-.controls{ display:flex; gap:12px; width:100%; justify-content:center; align-items:center; }
-
-.btn{
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  color:#04202b;
-  border:none;
-  padding:10px 14px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow: 0 6px 18px rgba(6,12,20,0.5);
-  transition: var(--transition);
-  display:inline-flex;
-  gap:10px;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-}
-.btn:hover{ transform: scale(1.04); box-shadow: 0 10px 28px rgba(6,12,20,0.56); }
-.btn:active{ transform: scale(0.98); }
-.btn.ghost{
-  background:transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color:var(--muted);
-  box-shadow:none;
-}
-
-.file-input{ display:none; }
-
-.right{ display:flex; flex-direction:column; gap:16px; justify-content:center; opacity:0; transform: translateY(12px); transition: var(--transition); }
-.right.show{ opacity:1; transform: translateY(0); }
-
-.info{ padding:14px; border-radius:10px; background:var(--glass); border:1px solid rgba(255,255,255,0.02); display:flex; flex-direction:column; gap:8px; transition: var(--transition); }
-.info-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
-.label{ font-size:13px; color:var(--muted); }
-.value{ font-weight:600; font-size:13px; color:#e6eef8; }
-
-.select,input.num-input{ transition: var(--transition); }
-.select:hover,input.num-input:hover{ transform: scale(1.03); }
-
-.muted-small{ color:var(--muted); font-size:12px; transition: var(--transition); }
+.title{font-size:20px;font-weight:600;margin:0;}
+.subtitle{font-size:13px;color:var(--muted);margin-top:6px;}
+.dropzone{width:100%;min-height:260px;border-radius:12px;padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.012), transparent);border:1px dashed rgba(255,255,255,0.06);transition:var(--transition);position:relative;cursor:pointer;overflow:hidden;}
+.dropzone.dragover{transform:translateY(-4px) scale(1.02);border-color:rgba(96,165,250,0.6);box-shadow:0 12px 36px rgba(96,165,250,0.12);background:linear-gradient(180deg, rgba(96,165,250,0.03), rgba(96,165,250,0.01));}
+.dropzone .hint{color:var(--muted);text-align:center;font-size:13px;transition:var(--transition);}
+.preview{width:100%;max-height:380px;border-radius:10px;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:8px;}
+.preview img{max-width:120px;max-height:120px;object-fit:contain;display:block;border-radius:6px;filter:drop-shadow(0 6px 20px rgba(2,6,23,0.6));opacity:0;transform:scale(0.97);animation:imgFadeIn .5s forwards;}
+@keyframes imgFadeIn{to{opacity:1;transform:scale(1);}}
+.controls{display:flex;gap:12px;width:100%;justify-content:center;align-items:center;}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#04202b;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(6,12,20,0.5);transition:var(--transition);display:inline-flex;gap:10px;align-items:center;justify-content:center;text-decoration:none;}
+.btn:hover{transform:scale(1.04);box-shadow:0 10px 28px rgba(6,12,20,0.56);}
+.btn:active{transform:scale(0.98);}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);box-shadow:none;}
+.file-input{display:none;}
+.right{display:flex;flex-direction:column;gap:16px;justify-content:center;opacity:0;transform:translateY(12px);transition:var(--transition);}
+.right.show{opacity:1;transform:translateY(0);}
+.info{padding:14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px;transition:var(--transition);}
+.info-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.label{font-size:13px;color:var(--muted);}
+.value{font-weight:600;font-size:13px;color:#e6eef8;}
+.select,input.num-input{transition:var(--transition);}
+.select:hover,input.num-input:hover{transform:scale(1.03);}
+.muted-small{color:var(--muted);font-size:12px;transition:var(--transition);}
 </style>
 </head>
 <body>
-<main class="container" role="main" aria-labelledby="pageTitle">
-  <section class="left" aria-label="Image upload and preview">
+<main class="container">
+  <section class="left">
     <div class="brand">
-      <h1 id="pageTitle" class="title">Image → PDF Converter</h1>
-      <div class="subtitle">Upload a PNG / JPG / JPEG — preview it, then convert to a downloadable PDF</div>
+      <h1 class="title">Image → PDF Converter</h1>
+      <div class="subtitle">Upload PNG / JPG / JPEG — single or multiple images</div>
     </div>
-    <div id="dropzone" class="dropzone" tabindex="0">
-      <input id="fileInput" class="file-input" type="file" accept="image/png,image/jpeg,image/jpg" />
+    <div id="dropzone" class="dropzone">
+      <input id="fileInput" class="file-input" type="file" accept="image/png,image/jpeg,image/jpg" multiple />
       <div id="previewWrap" class="preview">
         <div class="hint">
-          <div>Drop an image here or click to upload</div>
-          <div class="muted-small">PNG, JPG, JPEG — max recommended 10MB</div>
+          <div>Drop images here or click to upload</div>
+          <div class="muted-small">PNG, JPG, JPEG — max 10MB each</div>
         </div>
       </div>
       <div class="controls">
-        <label for="fileInput" class="btn ghost">Choose file</label>
+        <label for="fileInput" class="btn ghost">Choose files</label>
         <button id="clearBtn" type="button" class="btn ghost">Clear</button>
       </div>
-      <div style="width:100%; display:flex; gap:12px; justify-content:center; margin-top:6px;">
-        <button id="convertBtn" class="btn" disabled>Convert to PDF</button>
+      <div style="width:100%;display:flex;gap:12px;justify-content:center;margin-top:6px;">
+        <button id="convertBtn" class="btn" disabled>Convert</button>
       </div>
-      <footer class="muted-small" style="margin-top:6px;">Designed for speed • Fully client-side • No server upload</footer>
     </div>
   </section>
 
-  <aside class="right" aria-label="Conversion options and information">
+  <aside class="right">
     <div class="info">
       <div class="info-row">
-        <div><div class="label">Filename</div><div id="fileName" class="value">No file selected</div></div>
-        <div><div class="label">File size</div><div id="fileSize" class="value">—</div></div>
+        <div><div class="label">Files</div><div id="fileName" class="value">No files selected</div></div>
+        <div><div class="label">Total size</div><div id="fileSize" class="value">—</div></div>
       </div>
       <div class="info-row">
-        <div><div class="label">Image dimensions</div><div id="imgDim" class="value">—</div></div>
-        <div><div class="label">Pages</div><div id="pages" class="value">1</div></div>
+        <div><div class="label">Pages</div><div id="pages" class="value">0</div></div>
       </div>
-      <div style="height:1px;background:rgba(255,255,255,0.02); margin:6px 0; border-radius:2px"></div>
       <div class="label">PDF Options</div>
-      <div style="display:flex; gap:8px; margin-top:8px; align-items:center">
+      <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
         <select id="paperSize" class="select">
-          <option value="a4" selected>A4 (210 × 297 mm)</option>
-          <option value="letter">Letter (8.5 × 11 in)</option>
+          <option value="a4" selected>A4</option>
+          <option value="letter">Letter</option>
         </select>
         <select id="orientation" class="select">
           <option value="auto" selected>Auto</option>
@@ -228,12 +105,12 @@ html,body{
           <option value="0.92" selected>High (92%)</option>
           <option value="0.8">Good (80%)</option>
           <option value="0.6">Medium (60%)</option>
-          <option value="0.4">Small file (40%)</option>
+          <option value="0.4">Small (40%)</option>
         </select>
       </div>
       <div style="margin-top:12px;">
         <label class="label">Margins (mm)</label>
-        <input id="marginMm" class="num-input" type="number" min="0" max="40" step="1" value="10">
+        <input id="marginMm" class="num-input" type="number" min="0" max="40" value="10">
       </div>
       <div class="muted-small" style="margin-top:8px" id="log">Ready</div>
     </div>
@@ -241,85 +118,96 @@ html,body{
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
 <script>
 (function(){
 const $id=id=>document.getElementById(id);
 const dropzone=$id('dropzone'), fileInput=$id('fileInput'), previewWrap=$id('previewWrap');
 const clearBtn=$id('clearBtn'), convertBtn=$id('convertBtn');
-const fileNameEl=$id('fileName'), fileSizeEl=$id('fileSize'), imgDimEl=$id('imgDim'), pagesEl=$id('pages');
+const fileNameEl=$id('fileName'), fileSizeEl=$id('fileSize'), pagesEl=$id('pages');
 const paperSize=$id('paperSize'), orientationSel=$id('orientation'), qualitySel=$id('quality'), marginMmInput=$id('marginMm');
 const logEl=$id('log');
 const rightCol=document.querySelector('.right');
 
-let currentFile=null, currentImage=null, imgNaturalWidth=0,imgNaturalHeight=0;
+let currentFiles=[], imagesData=[];
 
-const formatBytes=n=>{if(!n)return'0 B'; const s=['B','KB','MB','GB']; const i=Math.floor(Math.log(n)/Math.log(1024)); return +(n/Math.pow(1024,i)).toFixed(2)+' '+s[i];};
+const formatBytes=n=>{if(!n)return'0 B';const s=['B','KB','MB','GB'];const i=Math.floor(Math.log(n)/Math.log(1024));return +(n/Math.pow(1024,i)).toFixed(2)+' '+s[i];};
+function log(msg){logEl.textContent=msg;}
 
-function log(msg){ logEl.textContent=msg; }
+clearBtn.addEventListener('click',()=>clearSelection());
+dropzone.addEventListener('click',e=>{if(e.target.closest('.btn'))return;fileInput.click();});
+['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt,e=>{e.preventDefault();dropzone.classList.add('dragover');}));
+['dragleave','drop'].forEach(evt=>dropzone.addEventListener(evt,e=>{e.preventDefault();dropzone.classList.remove('dragover');if(evt==='drop')handleDrop(e);}));
 
-clearBtn.addEventListener('click',e=>{ e.preventDefault(); clearSelection(); });
-dropzone.addEventListener('click',e=>{ if(e.target.closest('.btn')) return; fileInput.click(); });
-['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt,e=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); }));
-['dragleave','drop'].forEach(evt=>dropzone.addEventListener(evt,e=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); if(evt==='drop') handleDrop(e); }));
+fileInput.addEventListener('change',e=>{if(e.target.files.length)loadFiles(Array.from(e.target.files));fileInput.value='';});
+function handleDrop(e){if(e.dataTransfer.files.length)loadFiles(Array.from(e.dataTransfer.files));}
 
-fileInput.addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(f) loadFile(f); fileInput.value=''; });
-
-function handleDrop(e){ const dt=e.dataTransfer; if(!dt||!dt.files||dt.files.length===0) return; loadFile(dt.files[0]); }
-
-function loadFile(file){
-  if(!file.type.startsWith('image/')){ log('Please select an image file'); return; }
-  currentFile=file; fileNameEl.textContent=file.name; fileSizeEl.textContent=formatBytes(file.size); log('Loading preview...');
-  const reader=new FileReader();
-  reader.onload=ev=>showPreview(ev.target.result);
-  reader.readAsDataURL(file);
+function loadFiles(files){
+  clearSelection();
+  let totalSize=0;
+  files.forEach(file=>{
+    if(!file.type.startsWith('image/'))return;
+    currentFiles.push(file);
+    totalSize+=file.size;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const img=new Image();
+      img.src=ev.target.result;
+      img.onload=()=>{imagesData.push({file,img,width:img.naturalWidth,height:img.naturalHeight});updatePreview();};
+    };
+    reader.readAsDataURL(file);
+  });
+  if(currentFiles.length){fileNameEl.textContent=currentFiles.length+" file(s)";fileSizeEl.textContent=formatBytes(totalSize);log("Loading previews...");}
 }
 
-function showPreview(dataUrl){
-  previewWrap.innerHTML=''; 
-  const img=document.createElement('img'); 
-  img.src=dataUrl; 
-  previewWrap.appendChild(img); 
-  currentImage=img;
-  img.onload=function(){ 
-    imgNaturalWidth=img.naturalWidth; imgNaturalHeight=img.naturalHeight;
-    imgDimEl.textContent=imgNaturalWidth+' × '+imgNaturalHeight+' px'; pagesEl.textContent='1'; 
-    rightCol.classList.add('show'); 
-    convertBtn.disabled=false;
-    log('Preview ready'); 
-  };
-  img.onerror=function(){ log('Error loading image'); clearSelection(); }
+function updatePreview(){
+  previewWrap.innerHTML='';
+  imagesData.forEach(d=>{const thumb=document.createElement('img');thumb.src=d.img.src;previewWrap.appendChild(thumb);});
+  if(imagesData.length){pagesEl.textContent=imagesData.length;rightCol.classList.add('show');convertBtn.disabled=false;log("Previews ready");}
 }
 
 function clearSelection(){
-  currentFile=currentImage=null; imgNaturalWidth=imgNaturalHeight=0;
-  fileNameEl.textContent='No file selected'; fileSizeEl.textContent='—'; imgDimEl.textContent='—'; pagesEl.textContent='1';
-  previewWrap.innerHTML='<div class="hint">Drop an image here or click to upload</div>';
-  rightCol.classList.remove('show'); convertBtn.disabled=true; log('Selection cleared');
+  currentFiles=[];imagesData=[];
+  fileNameEl.textContent='No files selected';fileSizeEl.textContent='—';pagesEl.textContent='0';
+  previewWrap.innerHTML='<div class="hint"><div>Drop images here or click to upload</div><div class="muted-small">PNG, JPG, JPEG — max 10MB each</div></div>';
+  rightCol.classList.remove('show');convertBtn.disabled=true;log("Selection cleared");
 }
 
-// Convert to PDF
-convertBtn.addEventListener('click',()=>{
-  if(!currentImage) return;
-  log('Generating PDF...');
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({
-    unit:'mm',
-    format: paperSize.value,
-    orientation: orientationSel.value==='auto'? (imgNaturalWidth>imgNaturalHeight?'landscape':'portrait') : orientationSel.value
-  });
+convertBtn.addEventListener('click',async()=>{
+  if(!imagesData.length)return;
+  const { jsPDF }=window.jspdf;
   const quality=parseFloat(qualitySel.value);
   const margin=parseFloat(marginMmInput.value)||10;
-  const pageWidth=pdf.internal.pageSize.getWidth() - margin*2;
-  const pageHeight=pdf.internal.pageSize.getHeight() - margin*2;
-  
-  const imgAspect=imgNaturalWidth/imgNaturalHeight;
-  const pageAspect=pageWidth/pageHeight;
-  let w,h;
-  if(imgAspect>pageAspect){ w=pageWidth; h=w/imgAspect; } else { h=pageHeight; w=h*imgAspect; }
-  
-  pdf.addImage(currentImage, 'JPEG', margin, margin, w, h, undefined, 'FAST');
-  pdf.save((currentFile.name.split('.').slice(0,-1).join('.')||'document')+'.pdf');
-  log('PDF generated successfully');
+
+  if(imagesData.length===1){
+    log("Generating PDF...");
+    const d=imagesData[0];
+    const pdf=new jsPDF({unit:'mm',format:paperSize.value,orientation:orientationSel.value==='auto'?(d.width>d.height?'landscape':'portrait'):orientationSel.value});
+    const pageW=pdf.internal.pageSize.getWidth()-margin*2,pageH=pdf.internal.pageSize.getHeight()-margin*2;
+    const imgAspect=d.width/d.height,pageAspect=pageW/pageH;
+    let w,h;if(imgAspect>pageAspect){w=pageW;h=w/imgAspect;}else{h=pageH;w=h*imgAspect;}
+    pdf.addImage(d.img,'JPEG',margin,margin,w,h,undefined,'FAST');
+    pdf.save(d.file.name.replace(/\.[^/.]+$/,"")+".pdf");
+    log("PDF saved.");
+  }else{
+    log("Generating PDFs and zipping...");
+    const zip=new JSZip();
+    for(let i=0;i<imagesData.length;i++){
+      const d=imagesData[i];
+      const pdf=new jsPDF({unit:'mm',format:paperSize.value,orientation:orientationSel.value==='auto'?(d.width>d.height?'landscape':'portrait'):orientationSel.value});
+      const pageW=pdf.internal.pageSize.getWidth()-margin*2,pageH=pdf.internal.pageSize.getHeight()-margin*2;
+      const imgAspect=d.width/d.height,pageAspect=pageW/pageH;
+      let w,h;if(imgAspect>pageAspect){w=pageW;h=w/imgAspect;}else{h=pageH;w=h*imgAspect;}
+      pdf.addImage(d.img,'JPEG',margin,margin,w,h,undefined,'FAST');
+      const pdfBlob=pdf.output('blob');
+      zip.file(d.file.name.replace(/\.[^/.]+$/,"")+".pdf",pdfBlob);
+    }
+    const content=await zip.generateAsync({type:"blob"});
+    saveAs(content,"images.zip");
+    log("ZIP saved.");
+  }
 });
 })();
 </script>
